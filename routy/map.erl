@@ -1,6 +1,10 @@
 -module(map).
 -export([new/0, update/3, reachable/2, all_nodes/1]).
 
+% Map:
+% [{berlin,[london,paris]}, {madrid, [barcelona]}]
+% Each entry consist of a city with a list of directly connected cities.
+
 new () ->
     [].
 
@@ -12,7 +16,7 @@ update (Node, Links, Map) ->
     TupleFound = lists:keyfind(Node, 1, Map),  % Key, N, TupleList
     case TupleFound of
         false ->
-            NewMap = lists:append(Map, NewTuple);
+            NewMap = lists:append(Map, [NewTuple]);
         {_, _} ->
             NewMap = lists:keyreplace(Node, 1, Map, NewTuple)
     end,
@@ -37,7 +41,7 @@ reachable (Node, Map) ->
 % be in the returned list.
 all_nodes (Map) ->
     AllNodesDuplicates = lists:foldl(
-        fun(X, AllNodesAndLinks) -> 
+        fun(X, AllNodesAndLinks) ->
             {Node, Links} = X,
             NodesAndLinks = lists:append([Node], Links),
             lists:append(AllNodesAndLinks, NodesAndLinks)
@@ -46,4 +50,3 @@ all_nodes (Map) ->
         Map
     ),
     lists:usort(AllNodesDuplicates).
-
