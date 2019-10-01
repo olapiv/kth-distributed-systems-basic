@@ -38,19 +38,6 @@ loop(Name, Log, Peers, Sleep, Jitter, OwnTime)->
             Log ! {log, Name, MergedTimeInc, {received, Msg}},
             loop(Name, Log, Peers, Sleep, Jitter, MergedTimeInc);
 
-            % case time:leq(Time, OwnTime) of
-            % % case vect:leq(Time, OwnTime) of
-            %     true -> 
-            %         OwnTime2 = time:inc(Name, OwnTime),
-            %         % OwnTime2 = vect:inc(Name, OwnTime),
-            %         Log ! {log, Name, OwnTime2, {received, Msg}},
-            %         loop(Name, Log, Peers, Sleep, Jitter, OwnTime2);
-            %     false -> 
-            %         Time2 = time:inc(Name, Time),
-            %         % Time2 = vect:inc(Name, Time),
-            %         Log ! {log, Name, Time2, {received, Msg}},
-            %         loop(Name, Log, Peers, Sleep, Jitter, Time2)
-            % end;
         stop ->
             ok;
         Error ->

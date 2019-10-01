@@ -17,4 +17,13 @@ Example:
 
 In the norm we are working in, T(e1) and T(e2) are simply not comparable.
 
+But at least we know that they are not directly related!
+
 What are cases where this gives us an advantage over the normal Lamport clock?
+
+
+
+Or:
+
+T(e1) = [{paul,3},{john,4},{ringo,4},{george,3}]
+T(e2) = [{paul,2},{john,5},{ringo,2}]
