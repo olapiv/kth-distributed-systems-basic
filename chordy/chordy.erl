@@ -9,7 +9,7 @@
 start(Module, TestingMachines, NodesInRing, KeysPerTestingMachine) ->
     register(chordy, test:start(Module)),
     Ns = lists:seq(2, NodesInRing),
-    lists:foreach(fun(K) -> test:start(node2, chordy) end, Ns),
+    lists:foreach(fun(K) -> test:start(Module, chordy) end, Ns),
     timer:sleep(400),
     Ts = lists:seq(1,TestingMachines),
     Start = erlang:system_time(micro_seconds),
@@ -19,7 +19,7 @@ start(Module, TestingMachines, NodesInRing, KeysPerTestingMachine) ->
     TimeTotal = (Finish - Start) / 1000,
     TimePerLookup = TimeTotal / (TestingMachines * KeysPerTestingMachine),
     io:format("TestingMachines: ~w~nNodesInRing: ~w~nKeysPerTestingMachine: ~w~nTime taken: ~w ms~nTimePerLookup: ~w ms~n", [TestingMachines, NodesInRing, KeysPerTestingMachine, TimeTotal, TimePerLookup]),
-    chordy ! stopAll.
+    % chordy ! stopAll.
 
 initTestingMachine(KeysPerTestingMachine, Controller) ->
     spawn(fun() -> testingMachine(KeysPerTestingMachine, Controller) end).

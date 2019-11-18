@@ -170,29 +170,7 @@ stabilize(Pred, Next, Id, Successor) ->
             case key:between(Xkey, Id, Skey) of
                 true ->  % Xkey is our new successor
                     Xpid ! {notify, {Id, self()}},
-
                     drop(Sref),
-                    % if 
-                    %     Spid == self() -> 
-                    %         io:format("Avoiding to drop successor - he is me. self(): ~w~n", [self()]),
-                    %         ok;
-                    %     true -> 
-                    %         case Next of
-                    %             nil ->
-                    %                 ok;
-                    %             {_, _, Npid} ->
-                    %                 if
-                    %                     % If only two nodes in circle:
-                    %                     Npid == self() -> 
-                    %                         io:format("Avoiding to drop successor - only two in circle. self(): ~w~n", [self()]),
-                    %                         ok;
-                    %                     true ->
-                    %                         io:format("Dropping successor~n", []),
-                    %                         drop(Sref)
-                    %                 end
-                    %         end
-                    % end,
-
                     io:format("Monitoring successor~n", []),
                     {{Xkey, monitor(Xpid), Xpid}, nil};
                 false ->
