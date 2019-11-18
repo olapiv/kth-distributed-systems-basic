@@ -1,29 +1,5 @@
-Suggestions for Tutorial improvements:
+# About: Loggy the Logger
 
-- Update method in vect.erl?
+When handling log-messages of any software, it is suggested that the messages shown are in the order of events. Thereby, if event A is logged before event B, one can assume that event A happened before event B. However, when handling asynchronous, distributed systems, ordering logs from different nodes does not prove that easy. This is because the clocks of the nodes will not be synchronized. Even if a node for instance receives it’s time from an external atomic watch, there will always be a latency deliver- ing the timestamp, which will also differ between the nodes. To battle this problem, logical clocks are used. By discarding the actual time, they define time as a result of a sequence of events.
 
-----------
-
-T(e1) < T(e2) --> e1 happened before e2.
-
-However, if
-(T(e1) < T(e2)) --> false,
-this does not mean
-(T(e1) >= T(e2))
-
-Example:
-    T(e1) = [{paul,1},{john,1},{ringo,4}]
-    T(e2) = [{paul,2}]
-
-In the norm we are working in, T(e1) and T(e2) are simply not comparable.
-
-But at least we know that they are not directly related!
-
-What are cases where this gives us an advantage over the normal Lamport clock?
-
-
-
-Or:
-
-T(e1) = [{paul,3},{john,4},{ringo,4},{george,3}]
-T(e2) = [{paul,2},{john,5},{ringo,2}]
+In this assignment, the Lamport clock and the vector clock, both representations of logical clocks, are being implemented in a simple system of workers. These workers, each having their own timestamp, send each other messages and log each time they send and receive a message. The logging happens through a centralized logger, which keeps track of the workers’ timestamps, by running it’s own clock. This assignment describes the technicalities and advantages of implementing logical timestamps and how the Lamport and the vector differ from each other.
